@@ -413,7 +413,7 @@ function Invoke-MpCmdRun {
         [uint16] $SkipFrames = 4
     )
     $startParams = @{
-        FilePath   = Join-Path -Path:$(Get-RegistryKey -Path:'HKLM:\SOFTWARE\Microsoft\Windows Defender' -Name:'InstallLocation') 'MpCmdRun.exe'
+        FilePath   = Join-Path -Path:$(Get-RegistryKey -Path:'HKLM:\SOFTWARE\Microsoft\Windows -f' -Name:'InstallLocation') 'MpCmdRun.exe'
         SkipFrames = $SkipFrames
     }   
     if ($ArgumentList) {
@@ -714,7 +714,8 @@ try {
         } elseif ($osVersion.Major -eq 10 -and $osVersion.Minor -eq 0 -and $osVersion.Build -lt 18362) {
             $defenderFeature = Get-WindowsOptionalFeature -Online -FeatureName:'Windows-Defender-Features' -ErrorAction:Stop
             if ($defenderFeature.State -ne 'Enabled') {
-                $defenderFeature = $defenderFeature | Enable-WindowsOptionalFeature -Online -NoRestart
+                $defenderFeature = Enable-WindowsOptionalFeature -FeatureName Windows-Defender,Windows-Defender-Gui,Windows-Defender-Features -All -Online -NoRestart
+                #Else you would only install Windows-Defender-Features without subfeatures
             }
             if ($defenderFeature.RestartNeeded) {
                 Exit-Install "Restart is required by 'Windows-Defender-Features'" -ExitCode:$ERR_PENDING_REBOOT
