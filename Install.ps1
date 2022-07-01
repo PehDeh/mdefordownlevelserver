@@ -413,7 +413,7 @@ function Invoke-MpCmdRun {
         [uint16] $SkipFrames = 4
     )
     $startParams = @{
-        FilePath   = Join-Path -Path:$(Get-RegistryKey -Path:'HKLM:\SOFTWARE\Microsoft\Windows -f' -Name:'InstallLocation') 'MpCmdRun.exe'
+        FilePath   = Join-Path -Path:$(Get-RegistryKey -Path:'HKLM:\SOFTWARE\Microsoft\Windows Defender' -Name:'InstallLocation') 'MpCmdRun.exe'
         SkipFrames = $SkipFrames
     }   
     if ($ArgumentList) {
